@@ -68,10 +68,10 @@ return require('packer').startup(function(use)
       { 'L3MON4D3/LuaSnip' }, -- Required
       { 'hrsh7th/cmp-buffer' },
       { 'hrsh7th/cmp-path' },
+      { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     },
   })
 
-  use('jay-babu/mason-null-ls.nvim')
   use('jose-elias-alvarez/null-ls.nvim')
 
   use({
@@ -82,8 +82,5 @@ return require('packer').startup(function(use)
   })
 
   -- hunks & line number decoration for added/changed/deleted lines
-  use('lewis6991/gitsigns.nvim')
-
-  -- shows function signature while typing out its arguments <3
-  use('ray-x/lsp_signature.nvim')
+  use('lewis6991/gitsigns.nvim', { lock = true })
 end)
