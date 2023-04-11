@@ -7,6 +7,7 @@ local lsp = require('lsp-zero').preset({
     set_extra_mappings = false,
   },
 })
+local lspconfig = require('lspconfig')
 
 lsp.on_attach(function(_, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
@@ -63,6 +64,14 @@ lsp.configure('lua_ls', {
   },
 })
 
+lsp.configure('tsserver', {
+  -- setting correct root dir is important, especially in a monorepo
+  root_dir = function(fname)
+    return lspconfig.util.root_pattern('tsconfig.base.json', 'tsconfig.json')(fname)
+      or lspconfig.util.path.dirname(fname)
+  end,
+})
+
 lsp.setup()
 
 local null_ls = require('null-ls')
@@ -76,3 +85,13 @@ null_ls.setup({
     null_ls.builtins.code_actions.gitsigns,
   },
 })
+
+-- for debugging purposes. Root dir must be set correctly, especially in a monorepo
+function _G.print_root_dir()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local client_id = vim.lsp.get_active_clients()[1].id
+  local root_dir = vim.lsp.buf_get_clients(bufnr)[client_id].config.root_dir
+  print("Root directory:", root_dir)
+end
+
+vim.api.nvim_command('command! PrintRootDir lua _G.print_root_dir()')
