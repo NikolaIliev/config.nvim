@@ -16,7 +16,7 @@ require('gitsigns').setup({
     map('n', '<leader>hp', gs.preview_hunk)
     map('n', '<leader>hd', gs.diffthis)
     map('n', '<leader>hb', function()
-      gs.blame_line({ full = true })
+      gs.blame_line({ full = false })
     end)
   end,
 })
