@@ -67,8 +67,7 @@ lsp.configure('lua_ls', {
 lsp.configure('tsserver', {
   -- setting correct root dir is important, especially in a monorepo
   root_dir = function(fname)
-    return lspconfig.util.root_pattern('tsconfig.base.json', 'tsconfig.json')(fname)
-      or lspconfig.util.path.dirname(fname)
+    return lspconfig.util.root_pattern('tsconfig.base.json')(fname) or lspconfig.util.path.dirname(fname)
   end,
 })
 
@@ -91,7 +90,7 @@ function _G.print_root_dir()
   local bufnr = vim.api.nvim_get_current_buf()
   local client_id = vim.lsp.get_active_clients()[1].id
   local root_dir = vim.lsp.buf_get_clients(bufnr)[client_id].config.root_dir
-  print("Root directory:", root_dir)
+  print('Root directory:', root_dir)
 end
 
 vim.api.nvim_command('command! PrintRootDir lua _G.print_root_dir()')
