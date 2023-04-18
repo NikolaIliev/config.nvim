@@ -26,6 +26,7 @@ return require('packer').startup(function(use)
     tag = '*',
     config = function()
       require('toggleterm').setup({
+        shell = 'zsh --login',
         shading_factor = 2,
         size = function(term)
           if term.direction == 'horizontal' then
