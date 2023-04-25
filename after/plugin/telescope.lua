@@ -3,7 +3,7 @@ local builtin = require('telescope.builtin')
 local entry_display = require('telescope.pickers.entry_display')
 local path = require('plenary.path')
 local themes = require('telescope.themes')
-local theme = themes.get_ivy
+local theme = themes.get_dropdown
 
 require('telescope').setup({
   defaults = {
@@ -110,7 +110,7 @@ local function find_libraries()
     return displayer({ library_name })
   end
 
-  builtin.find_files({
+  builtin.find_files(theme({
     prompt_title = 'Find Libraries',
     cwd = repo_root.filename,
     find_command = { 'rg', '--files', '--hidden', '--iglob', 'libs/**/tsconfig.json' },
@@ -120,7 +120,7 @@ local function find_libraries()
       original_entry.display = make_display
       return original_entry
     end,
-  })
+  }))
 end
 
 vim.keymap.set('n', '<leader>fa', telescope_builtin('find_files', { hidden = true }), {})
@@ -131,7 +131,15 @@ vim.keymap.set('n', '<leader>gb', telescope_builtin('git_branches'), {})
 vim.keymap.set('n', '<leader>gs', telescope_builtin('git_status'), {})
 vim.keymap.set('n', '<leader>gh', telescope_builtin('git_bcommits'), {})
 
-vim.keymap.set('n', '<Esc>', telescope_builtin('buffers', { sort_lastused = true }), {})
+vim.keymap.set(
+  'n',
+  '<Esc>',
+  telescope_builtin(
+    'buffers',
+    { sort_lastused = true, sort_mru = true, ignore_current_buffer = true, show_all_buffers = false }
+  ),
+  {}
+)
 
 vim.keymap.set('n', '<leader>pd', telescope_builtin('diagnostics', { severity = 'error' }), {})
 

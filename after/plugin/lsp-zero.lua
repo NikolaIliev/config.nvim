@@ -81,6 +81,14 @@ null_ls.setup({
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.prettierd,
     null_ls.builtins.diagnostics.eslint_d,
+    --null_ls.builtins.diagnostics.tsc.with({
+    --cwd = function()
+    --return lspconfig.util.root_pattern('tsconfig.base.json')(vim.fn.expand("%:p:h"))
+    --end,
+    --command = "./node_modules/typescript/bin/tsc",
+    --args = {"-b", "--pretty", "false"},
+    --timeout = 60000
+    --}),
     null_ls.builtins.code_actions.gitsigns,
   },
 })
