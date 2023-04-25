@@ -84,4 +84,7 @@ return require('packer').startup(function(use)
 
   -- hunks & line number decoration for added/changed/deleted lines
   use('lewis6991/gitsigns.nvim', { lock = true })
+
+  -- async format on save
+  use "lukas-reineke/lsp-format.nvim"
 end)

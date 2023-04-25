@@ -9,11 +9,16 @@ local lsp = require('lsp-zero').preset({
 })
 local lspconfig = require('lspconfig')
 
-lsp.on_attach(function(_, bufnr)
+lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 
   vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
   vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+
+  -- async format on save
+  if client.name == 'null-ls' then
+    require('lsp-format').on_attach(client)
+  end
 end)
 
 -- sign icons
@@ -22,15 +27,6 @@ lsp.set_sign_icons({
   warn = '▲',
   hint = '⚑',
   info = '»',
-})
-
-lsp.format_on_save({
-  format_opts = {
-    timeout_ms = 10000,
-  },
-  servers = {
-    ['null-ls'] = { 'javascript', 'typescript', 'typescriptreact', 'json', 'yaml', 'lua' },
-  },
 })
 
 -- autocompletion mappings
@@ -79,8 +75,9 @@ null_ls.setup({
   sources = {
     -- tools not supported by mason.nvim
     null_ls.builtins.formatting.stylua,
-    null_ls.builtins.formatting.prettierd,
-    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.formatting.prettier,
+    -- workspace diagnostics - unstable
+    --
     --null_ls.builtins.diagnostics.tsc.with({
     --cwd = function()
     --return lspconfig.util.root_pattern('tsconfig.base.json')(vim.fn.expand("%:p:h"))
