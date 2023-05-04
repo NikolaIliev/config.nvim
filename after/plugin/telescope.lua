@@ -5,6 +5,11 @@ local path = require('plenary.path')
 local themes = require('telescope.themes')
 local theme = themes.get_dropdown
 
+local function send_to_quickfix(promtbufnr)
+  actions.smart_send_to_qflist(promtbufnr)
+  vim.cmd([[botright copen]])
+end
+
 require('telescope').setup({
   defaults = {
     path_display = { 'truncate' },
@@ -13,6 +18,7 @@ require('telescope').setup({
         ['<esc>'] = actions.close,
         ['<C-j>'] = actions.move_selection_next,
         ['<C-k>'] = actions.move_selection_previous,
+        ['<C-q>'] = send_to_quickfix,
       },
     },
   },
