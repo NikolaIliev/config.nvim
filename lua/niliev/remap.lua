@@ -13,6 +13,10 @@ vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<C-f>', 'L5j')
 vim.keymap.set('n', '<C-b>', 'H5k')
 
+-- quickfix navigation
+vim.keymap.set('n', '[c', ':cprev<CR>')
+vim.keymap.set('n', ']c', ':cnext<CR>')
+
 -------- Terminal mode --------
 
 -- for some reason in terminal mode shift+space outputs escape
