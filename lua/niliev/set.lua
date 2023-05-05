@@ -34,3 +34,6 @@ vim.opt.scrolloff = 20
 
 -- always display sign column
 vim.opt.signcolumn = 'yes'
+
+-- login shell
+vim.opt.shell = 'zsh --login'

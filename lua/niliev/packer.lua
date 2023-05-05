@@ -26,7 +26,6 @@ return require('packer').startup(function(use)
     tag = '*',
     config = function()
       require('toggleterm').setup({
-        shell = 'zsh --login',
         shading_factor = 2,
         size = function(term)
           if term.direction == 'horizontal' then
@@ -86,5 +85,5 @@ return require('packer').startup(function(use)
   use('lewis6991/gitsigns.nvim', { lock = true })
 
   -- async format on save
-  use "lukas-reineke/lsp-format.nvim"
+  use('lukas-reineke/lsp-format.nvim')
 end)
