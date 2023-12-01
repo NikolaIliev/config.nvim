@@ -5,7 +5,7 @@ return require('packer').startup(function(use)
 
   use({
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.1',
+    tag = '0.1.4',
     -- or                            , branch = '0.1.x',
     requires = { { 'nvim-lua/plenary.nvim' } },
   })
@@ -74,16 +74,16 @@ return require('packer').startup(function(use)
 
   use('jose-elias-alvarez/null-ls.nvim')
 
+  -- hunks & line number decoration for added/changed/deleted lines
+  use('lewis6991/gitsigns.nvim', { lock = true })
+
+  -- async format on save
+  use('lukas-reineke/lsp-format.nvim')
+
   use({
     'windwp/nvim-autopairs',
     config = function()
       require('nvim-autopairs').setup({})
     end,
   })
-
-  -- hunks & line number decoration for added/changed/deleted lines
-  use('lewis6991/gitsigns.nvim', { lock = true })
-
-  -- async format on save
-  use('lukas-reineke/lsp-format.nvim')
 end)
