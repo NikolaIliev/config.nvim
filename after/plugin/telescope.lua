@@ -150,7 +150,18 @@ vim.keymap.set(
 vim.keymap.set('n', '<leader>pd', telescope_builtin('diagnostics', { severity = 'error' }), {})
 
 vim.keymap.set('n', '<leader>ps', function()
-  builtin.grep_string({ search = vim.fn.input('Grep > ') })
+  builtin.grep_string({ search = vim.fn.input('Search in repo > ') })
+end, {})
+
+vim.keymap.set('n', '<leader>ls', function()
+  local current_file_dir = vim.fn.expand('%:p:h')
+  local library_root = find_nearest_package_json_dir(current_file_dir)
+
+  if library_root == nil then
+    return
+  end
+
+  builtin.grep_string({ search = vim.fn.input('Search in lib > '), cwd = library_root.filename })
 end, {})
 
 vim.keymap.set('n', '<leader>ll', find_libraries)
