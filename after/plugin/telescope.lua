@@ -150,7 +150,13 @@ vim.keymap.set(
 vim.keymap.set('n', '<leader>pd', telescope_builtin('diagnostics', { severity = 'error' }), {})
 
 vim.keymap.set('n', '<leader>ps', function()
-  builtin.grep_string({ search = vim.fn.input('Search in repo > ') })
+  local input = vim.fn.input('Search in repo > ')
+
+  if input == '' then
+    return
+  end
+
+  builtin.grep_string({ search = input })
 end, {})
 
 vim.keymap.set('n', '<leader>ls', function()
@@ -161,7 +167,13 @@ vim.keymap.set('n', '<leader>ls', function()
     return
   end
 
-  builtin.grep_string({ search = vim.fn.input('Search in lib > '), cwd = library_root.filename })
+  local input = vim.fn.input('Search in lib > ')
+
+  if input == '' then
+    return
+  end
+
+  builtin.grep_string({ search = input, cwd = library_root.filename })
 end, {})
 
 vim.keymap.set('n', '<leader>ll', find_libraries)
