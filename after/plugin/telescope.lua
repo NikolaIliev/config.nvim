@@ -50,34 +50,42 @@ end
 -- Helper function to find the nearest parent directory containing a package.json file
 local function find_nearest_package_json_dir(start_dir)
   local current_dir = path:new(start_dir)
+
   while current_dir ~= nil do
     local package_json_path = current_dir:joinpath('package.json')
     if package_json_path:exists() then
       return current_dir
     end
-    current_dir = current_dir:parent()
+    local parent_dir = current_dir:parent()
+
+    if parent_dir:absolute() == current_dir:absolute() then
+      current_dir = nil
+    else
+      current_dir = parent_dir
+    end
   end
+
   return nil
 end
 
--- Custom function for searching files within the current library
-local function find_files_in_current_library()
+-- Custom function for searching files within the current package
+local function find_files_in_current_package()
   local current_file_dir = vim.fn.expand('%:p:h')
-  local library_root = find_nearest_package_json_dir(current_file_dir)
+  local package_root = find_nearest_package_json_dir(current_file_dir)
 
-  if library_root == nil then
-    print('No library with package.json found.')
+  if package_root == nil then
+    print('No package found up the tree.')
     return
   end
 
-  local split_path = vim.split(library_root.filename, '/')
-  local library_name = split_path[#split_path]
+  local split_path = vim.split(package_root.filename, '/')
+  local package_name = split_path[#split_path]
 
-  print(library_name)
+  print(package_name)
 
   builtin.find_files(theme({
-    cwd = library_root.filename,
-    prompt_title = 'Files in ' .. library_name,
+    cwd = package_root.filename,
+    prompt_title = 'Files in ' .. package_name,
   }))
 end
 
@@ -97,7 +105,7 @@ local function find_git_repo_root(starting_path)
   return current_path
 end
 
-local function find_libraries()
+local function find_packages()
   local current_file_dir = vim.fn.expand('%:p:h')
   local repo_root = find_git_repo_root(current_file_dir)
 
@@ -112,14 +120,22 @@ local function find_libraries()
   })
 
   local function make_display(entry)
-    local library_name = vim.fn.fnamemodify(entry.value, ':h:t')
-    return displayer({ library_name })
+    local package_name = vim.fn.fnamemodify(entry.value, ':h:t')
+    return displayer({ package_name })
   end
 
   builtin.find_files(theme({
-    prompt_title = 'Find Libraries',
+    prompt_title = 'Find Packages',
     cwd = repo_root.filename,
-    find_command = { 'rg', '--files', '--hidden', '--iglob', 'libs/**/tsconfig.json' },
+    find_command = {
+      'rg',
+      '--files',
+      '--hidden',
+      '--iglob',
+      'libs/**/package.json',
+      '--iglob',
+      'apps/**/package.json',
+    },
     entry_maker = function(entry, opts)
       local original_maker = require('telescope.make_entry').gen_from_file(opts)
       local original_entry = original_maker(entry)
@@ -161,20 +177,20 @@ end, {})
 
 vim.keymap.set('n', '<leader>ls', function()
   local current_file_dir = vim.fn.expand('%:p:h')
-  local library_root = find_nearest_package_json_dir(current_file_dir)
+  local package_root = find_nearest_package_json_dir(current_file_dir)
 
-  if library_root == nil then
+  if package_root == nil then
     return
   end
 
-  local input = vim.fn.input('Search in lib > ')
+  local input = vim.fn.input('Search in package > ')
 
   if input == '' then
     return
   end
 
-  builtin.grep_string({ search = input, cwd = library_root.filename })
+  builtin.grep_string({ search = input, cwd = package_root.filename })
 end, {})
 
-vim.keymap.set('n', '<leader>ll', find_libraries)
-vim.keymap.set('n', '<leader>fl', find_files_in_current_library)
+vim.keymap.set('n', '<leader>ll', find_packages)
+vim.keymap.set('n', '<leader>fl', find_files_in_current_package)
