@@ -27,13 +27,23 @@ local Mode = {
   update = 'ModeChanged',
 }
 
-local Time = {
+local Diagnostics = {
   provider = function()
-    return ' ' .. os.date('%H:%M')
+    local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+    local errors = #diagnostics
+
+    local result = {}
+    if errors > 0 then
+      table.insert(result, 'E: ' .. errors)
+    end
+
+    return table.concat(result, ' ')
   end,
+
+  update = { 'DiagnosticChanged', 'BufEnter' }, -- Update when diagnostics change or buffer changes
 }
 
-local StatusLine = { Mode, Time, BufferName }
+local StatusLine = { Mode, BufferName, Diagnostics }
 local WinBar = {}
 local TabLine = {}
 

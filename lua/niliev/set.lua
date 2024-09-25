@@ -7,6 +7,7 @@ vim.opt.updatetime = 50
 
 -- Tab set to two spaces
 
+vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
@@ -37,3 +38,7 @@ vim.opt.signcolumn = 'yes'
 
 -- login shell
 vim.opt.shell = 'zsh --login'
+
+-- display hidden characters
+vim.opt.list = true
+vim.opt.listchars = { tab = '  ', trail = '·' }

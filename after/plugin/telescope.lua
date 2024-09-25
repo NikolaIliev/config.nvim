@@ -48,12 +48,12 @@ local function find_files_ignore_android_ios()
 end
 
 -- Helper function to find the nearest parent directory containing a package.json file
-local function find_nearest_package_json_dir(start_dir)
+local function find_nearest_project_json_dir(start_dir)
   local current_dir = path:new(start_dir)
 
   while current_dir ~= nil do
-    local package_json_path = current_dir:joinpath('package.json')
-    if package_json_path:exists() then
+    local project_json_path = current_dir:joinpath('project.json')
+    if project_json_path:exists() then
       return current_dir
     end
     local parent_dir = current_dir:parent()
@@ -71,7 +71,7 @@ end
 -- Custom function for searching files within the current package
 local function find_files_in_current_package()
   local current_file_dir = vim.fn.expand('%:p:h')
-  local package_root = find_nearest_package_json_dir(current_file_dir)
+  local package_root = find_nearest_project_json_dir(current_file_dir)
 
   if package_root == nil then
     print('No package found up the tree.')
@@ -132,9 +132,9 @@ local function find_packages()
       '--files',
       '--hidden',
       '--iglob',
-      'libs/**/package.json',
+      'libs/**/project.json',
       '--iglob',
-      'apps/**/package.json',
+      'apps/**/project.json',
     },
     entry_maker = function(entry, opts)
       local original_maker = require('telescope.make_entry').gen_from_file(opts)
@@ -177,7 +177,7 @@ end, {})
 
 vim.keymap.set('n', '<leader>ls', function()
   local current_file_dir = vim.fn.expand('%:p:h')
-  local package_root = find_nearest_package_json_dir(current_file_dir)
+  local package_root = find_nearest_project_json_dir(current_file_dir)
 
   if package_root == nil then
     return
