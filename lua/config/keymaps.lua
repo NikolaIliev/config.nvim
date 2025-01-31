@@ -1,7 +1,6 @@
 vim.g.mapleader = ' '
 
 -------- Normal mode --------
-vim.keymap.set('n', '<leader>pv', ':Ex<CR>')
 vim.keymap.set('n', '<leader><Space>', ':noh<CR>')
 
 -- more ergonomic navigation over buffer splits
@@ -18,6 +17,22 @@ vim.keymap.set('n', '<C-b>', 'H5k')
 vim.keymap.set('n', '[c', ':cprev<CR>')
 vim.keymap.set('n', ']c', ':cnext<CR>')
 
+-- show diagnostics for current line
+vim.keymap.set('n', '<leader>dl', function()
+  vim.diagnostic.open_float(nil, { focus = false })
+end, {
+  desc = 'Show diagnostics for current line in a floating window',
+})
+
+-- splits
+vim.keymap.set('n', '<leader>sh', ':split<CR>:wincmd w<CR>', {
+  desc = 'Create horizontal split and focus it',
+})
+
+vim.keymap.set('n', '<leader>sv', ':vsplit<CR>:wincmd w<CR>', {
+  desc = 'Create vertical split and focus it',
+})
+
 -------- Terminal mode --------
 
 -- for some reason in terminal mode shift+space outputs escape
@@ -26,12 +41,3 @@ vim.keymap.set('t', '<S-Space>', '<Space>')
 
 -- in terminal mode, more ergonomic way to go to normal mode
 vim.keymap.set('t', '<C-w>', '<C-\\><C-n>')
-
--------- Splits --------
-vim.keymap.set('n', '<leader>sh', ':split<CR>:wincmd w<CR>', {
-  desc = 'Create horizontal split and focus it',
-})
-
-vim.keymap.set('n', '<leader>sv', ':vsplit<CR>:wincmd w<CR>', {
-  desc = 'Create vertical split and focus it',
-})
