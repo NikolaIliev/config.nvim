@@ -32,11 +32,18 @@ return {
       desc = 'Search in Repo',
     },
     {
-      '<leader>pd',
+      '<leader>da',
+      function()
+        require('telescope.builtin').diagnostics()
+      end,
+      desc = 'Project Diagnostics',
+    },
+    {
+      '<leader>de',
       function()
         require('telescope.builtin').diagnostics({ severity = 'error' })
       end,
-      desc = 'Project Diagnostics',
+      desc = 'Project Diagnostics (Errors only)',
     },
     {
       '<Esc>',
