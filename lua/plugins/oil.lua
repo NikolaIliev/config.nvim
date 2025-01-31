@@ -1,5 +1,6 @@
 return {
   'stevearc/oil.nvim',
+  version = 'v2.*',
   opts = {
     -- Use floating window
     float = {

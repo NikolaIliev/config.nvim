@@ -1,5 +1,6 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  version = 'v0.*',
   build = ':TSUpdate',
   opts = {
     highlight = {

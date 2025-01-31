@@ -1,5 +1,6 @@
 return {
   'stevearc/conform.nvim',
+  version = 'v8.*',
   opts = {
     format_on_save = {
       timeout_ms = 500, -- Timeout before formatting is canceled

@@ -1,5 +1,6 @@
 return {
   'hrsh7th/nvim-cmp',
+  version = '0.*',
   dependencies = {
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
