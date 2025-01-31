@@ -33,6 +33,11 @@ vim.keymap.set('n', '<leader>sv', ':vsplit<CR>:wincmd w<CR>', {
   desc = 'Create vertical split and focus it',
 })
 
+-- search in buffer for word under cursor
+vim.keymap.set('n', '<leader>/', '*N', {
+  desc = 'HL Search in buffer for word under cursor; stays in place',
+})
+
 -------- Terminal mode --------
 
 -- for some reason in terminal mode shift+space outputs escape
