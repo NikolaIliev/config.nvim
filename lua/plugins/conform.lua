@@ -9,6 +9,12 @@ return {
     formatters_by_ft = {
       lua = { 'stylua' },
       rust = { 'rustfmt' },
+      python = { 'black' },
+    },
+    formatters = {
+      black = {
+        prepend_args = { '--fast' },
+      },
     },
   },
 }

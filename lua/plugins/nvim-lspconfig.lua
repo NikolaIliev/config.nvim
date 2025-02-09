@@ -65,6 +65,22 @@ return {
             },
           })
         end,
+
+        ['pyright'] = function()
+          require('lspconfig').pyright.setup({
+            capabilities = lsp_defaults.capabilities,
+            settings = {
+              python = {
+                analysis = {
+                  autoImportCompletions = true,
+                },
+                pythonPath = vim.fn.getcwd() .. '/.venv/bin/python1231231',
+                venvPath = vim.fn.getcwd(),
+                venv = '.venv',
+              },
+            },
+          })
+        end,
       },
     })
   end,
