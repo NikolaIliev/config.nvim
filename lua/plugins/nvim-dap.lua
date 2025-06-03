@@ -5,10 +5,12 @@ return {
     'rcarriga/nvim-dap-ui', -- Debugging UI
     'nvim-neotest/nvim-nio',
     'theHamsta/nvim-dap-virtual-text', -- Inline debug info
+    'mfussenegger/nvim-dap-python',
   },
   config = function()
     local dap = require('dap')
     local dapui = require('dapui')
+    local dappython = require('dap-python')
 
     -- Get `codelldb` path from Mason
     local codelldb_path = require('mason-registry').get_package('codelldb'):get_install_path() .. '/codelldb'
@@ -38,6 +40,8 @@ return {
         runInTerminal = false,
       },
     }
+
+    require('dap-python').setup(vim.fn.getcwd() .. '/.venv/bin/python3')
 
     -- Setup Debug UI & Virtual Text
     dapui.setup()
