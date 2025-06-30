@@ -7,6 +7,8 @@ return {
       lsp_format = 'fallback', -- Use LSP if no formatter is defined
     },
     formatters_by_ft = {
+      typescript = { 'prettier' },
+      javascript = { 'prettier' },
       lua = { 'stylua' },
       rust = { 'rustfmt' },
       python = { 'black' },
