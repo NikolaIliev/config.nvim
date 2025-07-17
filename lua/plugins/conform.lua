@@ -8,7 +8,9 @@ return {
     },
     formatters_by_ft = {
       typescript = { 'prettier' },
+      typescriptreact = { 'prettier' },
       javascript = { 'prettier' },
+      javascriptreact = { 'prettier' },
       lua = { 'stylua' },
       rust = { 'rustfmt' },
       python = { 'black' },

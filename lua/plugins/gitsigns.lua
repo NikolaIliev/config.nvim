@@ -11,6 +11,10 @@ return {
       changedelete = { text = '~' },
     },
     signcolumn = true, -- Ensure signs appear in the left column
+    watch_gitdir = {
+      follow_files = true,
+    },
+    update_debounce = 1000,
   },
   keys = {
     {
